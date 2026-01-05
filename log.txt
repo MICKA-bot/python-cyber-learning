@@ -1,0 +1,4 @@
+LOGIN SUCCESS user=admin
+LOGIN FAILED user=test
+LOGIN SUCCESS user=micka
+LOGIN FAILED user=guest
