@@ -1,4 +1,10 @@
-LOGIN SUCCESS user=admin
 LOGIN FAILED user=test
-LOGIN SUCCESS user=micka
+LOGIN FAILED user=test
+LOGIN FAILED user=test
+LOGIN SUCCESS user=test
+LOGIN FAILED user=admin
+LOGIN SUCCESS user=admin
+LOGIN FAILED user=guest
+LOGIN FAILED user=guest
+LOGIN FAILED user=guest
 LOGIN FAILED user=guest

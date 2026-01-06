@@ -1,19 +1,24 @@
-failed_count = 0
-success_count = 0
-total_count = 0
+failed_users = {}
+ALERT_THRESHOLD = 3
 
 file = open("log.txt", "r")
 
 for line in file:
-    total_count = total_count + 1
-
     if "FAILED" in line:
-        failed_count = failed_count + 1
-    elif "SUCCESS" in line:
-        success_count = success_count + 1
+        parts = line.split("user=")
+        username = parts[1].strip()
+
+        if username in failed_users:
+            failed_users[username] = failed_users[username] + 1
+        else:
+            failed_users[username] = 1
 
 file.close()
 
-print("Connexions réussies :", success_count)
-print("Connexions échouées :", failed_count)
-print("Total des tentatives :", total_count)
+print("Tentatives échouées par utilisateur :")
+
+for user, count in failed_users.items():
+    print(user, ":", count)
+
+    if count >= ALERT_THRESHOLD:
+        print("🚨 ALERTE :", user, "a", count, "échecs de connexion")
