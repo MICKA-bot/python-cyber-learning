@@ -1,12 +1,12 @@
 failed_users = {}
-ALERT_THRESHOLD = 3
+blocked_users = []
+BRUTE_FORCE_THRESHOLD = 4
 
 file = open("log.txt", "r")
 
 for line in file:
     if "FAILED" in line:
-        parts = line.split("user=")
-        username = parts[1].strip()
+        username = line.split("user=")[1].strip()
 
         if username in failed_users:
             failed_users[username] = failed_users[username] + 1
@@ -15,10 +15,13 @@ for line in file:
 
 file.close()
 
-print("Tentatives échouées par utilisateur :")
+print("=== RAPPORT DE SÉCURITÉ ===")
 
 for user, count in failed_users.items():
-    print(user, ":", count)
+    if count >= BRUTE_FORCE_THRESHOLD:
+        blocked_users.append(user)
+        print("🚨 BRUTE FORCE DÉTECTÉE :", user, "-", count, "échecs → COMPTE BLOQUÉ")
+    else:
+        print("ℹ️", user, "-", count, "échecs")
 
-    if count >= ALERT_THRESHOLD:
-        print("🚨 ALERTE :", user, "a", count, "échecs de connexion")
+print("\nUtilisateurs bloqués :", blocked_users)
